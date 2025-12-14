@@ -687,6 +687,37 @@ git tag -a v1.2.0 -m "Release version 1.2.0"
 git push origin v1.2.0
 ```
 
+
+## Application Screenshots
+
+This section showcases the visual output of the AWS Cost Management Forge App, demonstrating the user interface and functionality.
+
+### Main Dashboard
+
+The main dashboard displays all stored AWS accounts in an organized grid format, providing a centralized view of your cost management credentials.
+
+![Main Dashboard](assets/dashboard.png)
+
+*Figure 1: Main Dashboard - Shows the grid view of all configured AWS accounts with their current status and details.*
+
+### Add Account Interface
+
+The add account interface provides a clean, user-friendly form for securely storing new AWS Cost and Usage Report credentials.
+
+![Add Account](assets/addaccount.png)
+
+*Figure 2: Add Account Interface - Modal form for entering AWS credentials including access keys, secret keys, S3 bucket URIs, and regions.*
+
+### Cost Visualization
+
+The cost visualization feature enables users to view and analyze AWS cost data with interactive charts and detailed breakdowns.
+
+![Cost Visualization](assets/visualisation.png)
+
+*Figure 3: Cost Visualization - Interactive charts and graphs showing cost analysis, spending trends, and budget tracking across multiple AWS accounts.*
+
+---
+
 ## Usage Guide
 
 ### Getting Started
