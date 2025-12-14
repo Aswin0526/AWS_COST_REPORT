@@ -11,15 +11,11 @@ A comprehensive Atlassian Forge application for managing AWS Cost and Usage Repo
 - [Technology Stack](#technology-stack)
 - [Project Structure](#project-structure)
 - [API Documentation](#api-documentation)
-- [Security](#security)
 - [Installation & Setup](#installation--setup)
 - [Development](#development)
 - [Deployment](#deployment)
 - [Usage Guide](#usage-guide)
 - [Configuration](#configuration)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Overview
 
@@ -405,30 +401,6 @@ All functions include comprehensive error handling:
 - **Network Errors**: Communication issues with Forge services
 - **Authentication Errors**: Permission or access issues
 
-## Security
-
-### Security Measures
-
-#### 1. Secure Storage
-- **Forge Storage API**: Credentials stored using Forge's secure storage
-- **Encryption**: Data encrypted at rest
-- **Access Control**: Scoped to specific app and project
-
-#### 2. Data Isolation
-- **Project Scoping**: Each project's data is isolated
-- **App Boundary**: Data cannot cross app boundaries
-- **User Permissions**: Respects Jira user permissions
-
-#### 3. Input Validation
-- **Client-Side**: Form validation before submission
-- **Server-Side**: Parameter validation in resolvers
-- **Sanitization**: Input sanitization to prevent injection
-
-#### 4. Secure Transmission
-- **HTTPS**: All communication over HTTPS
-- **Forge Bridge**: Secure communication channel
-- **No Credential Exposure**: Credentials never exposed in logs
-
 ### Security Best Practices
 
 #### For Users
@@ -455,7 +427,7 @@ permissions:
 
 ### Prerequisites
 
-1. **Node.js 22.x** or higher
+1. **Node.js 22.x**
 2. **npm** package manager
 3. **Forge CLI** installed globally
 4. **Atlassian Developer Account**
@@ -568,67 +540,8 @@ forge install
 
 4. **Debug**
 ```bash
-forge logs --tail
+forge logs
 ```
-
-### Code Style Guidelines
-
-#### JavaScript/React
-- Use functional components with hooks
-- Follow ESLint configuration
-- Use meaningful variable names
-- Add JSDoc comments for functions
-
-#### Example Component Structure
-```javascript
-/**
- * Component description
- * @param {Object} props - Component props
- * @returns {JSX.Element} React component
- */
-const ComponentName = ({ prop1, prop2 }) => {
-    // State declarations
-    const [state, setState] = useState();
-    
-    // Effects
-    useEffect(() => {
-        // Side effects
-    }, []);
-    
-    // Event handlers
-    const handleEvent = () => {
-        // Logic
-    };
-    
-    // Render
-    return (
-        <div>
-            {/* JSX */}
-        </div>
-    );
-};
-```
-
-### Testing Strategy
-
-#### Unit Testing
-```bash
-cd static/hello-world
-npm test
-```
-
-#### Integration Testing
-- Test resolver functions manually
-- Use Forge testing utilities
-- Test user workflows end-to-end
-
-#### Manual Testing Checklist
-- [ ] Add new credentials
-- [ ] Edit existing credentials
-- [ ] Delete credentials
-- [ ] Handle validation errors
-- [ ] Test across different browsers
-- [ ] Verify security isolation
 
 ## Deployment
 
@@ -670,23 +583,6 @@ forge install --environment staging
 forge deploy --environment production
 forge install --environment production
 ```
-
-### Version Management
-
-1. **Update Version**
-```json
-{
-  "version": "1.2.0",
-  "name": "jira-project-page-custom-ui"
-}
-```
-
-2. **Tag Release**
-```bash
-git tag -a v1.2.0 -m "Release version 1.2.0"
-git push origin v1.2.0
-```
-
 
 ## Application Screenshots
 
@@ -785,9 +681,8 @@ All fields marked with (*) are required:
 
 #### Credential Management
 1. **Use Descriptive Names**: Use clear, descriptive names for accounts
-2. **Regular Rotation**: Rotate AWS credentials periodically
-3. **Least Privilege**: Use IAM users with minimal required permissions
-4. **Documentation**: Document the purpose of each account
+2. **Least Privilege**: Use IAM users with minimal required permissions or enable permission to access CUR reports
+3. **Documentation**: Document the purpose of each account
 
 #### Project Organization
 1. **Naming Conventions**: Establish consistent naming conventions
@@ -878,101 +773,6 @@ Modify `static/hello-world/src/styles.css` to customize:
 }
 ```
 
-## Troubleshooting
-
-### Common Issues
-
-#### 1. App Not Loading
-**Symptoms**: App doesn't appear in Jira project page
-
-**Solutions**:
-- Verify app is installed: `forge list`
-- Check app permissions in Jira
-- Ensure correct project context
-- Review Forge logs: `forge logs`
-
-#### 2. Credential Storage Failures
-**Symptoms**: Cannot save or update credentials
-
-**Solutions**:
-- Check Forge storage quota
-- Verify network connectivity
-- Review resolver function logs
-- Ensure valid project ID
-
-#### 3. Frontend Build Issues
-**Symptoms**: Frontend not building correctly
-
-**Solutions**:
-```bash
-cd static/hello-world
-rm -rf node_modules package-lock.json
-npm install
-npm run build
-```
-
-#### 4. Authentication Errors
-**Symptoms**: 401/403 errors
-
-**Solutions**:
-- Re-authenticate: `forge login`
-- Check app permissions
-- Verify user has project access
-- Review Forge CLI configuration
-
-### Debug Commands
-
-#### View Logs
-```bash
-# Real-time logs
-forge logs --tail
-
-# Specific function logs
-forge logs --function resolver
-
-# Error logs only
-forge logs --level error
-```
-
-#### Check App Status
-```bash
-# List installed apps
-forge list
-
-# App information
-forge app info
-```
-
-#### Storage Debugging
-```javascript
-// Add to resolver for debugging
-console.log('Storage content:', await storage.get('secretsObject'));
-```
-
-### Performance Issues
-
-#### Slow Load Times
-1. **Check Network**: Verify Forge connectivity
-2. **Optimize Queries**: Minimize storage operations
-3. **Cache Results**: Implement client-side caching
-4. **Bundle Size**: Optimize React bundle size
-
-#### Large Datasets
-1. **Pagination**: Implement pagination for large credential lists
-2. **Lazy Loading**: Load credentials on demand
-3. **Search**: Add search functionality
-4. **Filtering**: Implement account filtering
-
-### Error Messages
-
-#### Common Error Messages
-
-| Error Message | Cause | Solution |
-|---------------|-------|----------|
-| "Target {name} already exists" | Duplicate account name | Use unique account names |
-| "Target {name} not found" | Account doesn't exist | Verify account name spelling |
-| "Failed to store credentials" | Storage quota exceeded | Clean up old credentials |
-| "Network error" | Connectivity issues | Check network and retry |
 
 #### Debug Mode
 Enable debug logging:
@@ -984,157 +784,3 @@ console.log('Debug info:', {
     timestamp: new Date().toISOString()
 });
 ```
-
-## Contributing
-
-### Development Setup
-
-1. **Fork the Repository**
-2. **Create Feature Branch**
-```bash
-git checkout -b feature/your-feature-name
-```
-
-3. **Make Changes**
-   - Follow coding standards
-   - Add tests for new features
-   - Update documentation
-
-4. **Test Changes**
-```bash
-npm test
-forge deploy --environment development
-forge install --environment development
-```
-
-5. **Submit Pull Request**
-   - Include detailed description
-   - Reference any related issues
-   - Ensure all tests pass
-
-### Code Standards
-
-#### JavaScript Style
-- Use ESLint configuration provided
-- Follow Airbnb JavaScript style guide
-- Use meaningful variable and function names
-- Add JSDoc comments for functions
-
-#### React Guidelines
-- Use functional components with hooks
-- Implement proper error boundaries
-- Use PropTypes for component props
-- Optimize for re-renders
-
-#### Git Commit Messages
-```
-type(scope): description
-
-feat(auth): add OAuth integration
-fix(ui): resolve modal close button issue
-docs(readme): update installation instructions
-test(api): add credential validation tests
-```
-
-### Testing Requirements
-
-#### Unit Tests
-- Test all resolver functions
-- Test React components
-- Test utility functions
-
-#### Integration Tests
-- Test user workflows
-- Test Forge integration
-- Test security features
-
-#### Manual Testing
-- Test all CRUD operations
-- Test error scenarios
-- Test across browsers
-- Test mobile responsiveness
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-### MIT License Summary
-
-- ✅ Commercial use
-- ✅ Modification
-- ✅ Distribution
-- ✅ Private use
-- ❌ Liability
-- ❌ Warranty
-
-### Third-Party Dependencies
-
-All dependencies are used in accordance with their respective licenses:
-
-- **React**: MIT License
-- **@forge/bridge**: Atlassian Software License
-- **@forge/resolver**: Atlassian Software License
-- **ESLint**: MIT License
-
-## Support
-
-### Getting Help
-
-1. **Documentation**: Review this README and inline code comments
-2. **Issues**: Create GitHub issues for bugs and feature requests
-3. **Community**: Use Atlassian developer community forums
-4. **Atlassian Support**: For Forge platform issues
-
-### Reporting Bugs
-
-When reporting bugs, please include:
-
-- Forge CLI version: `forge --version`
-- Node.js version: `node --version`
-- Browser and version
-- Steps to reproduce
-- Expected vs actual behavior
-- Screenshots (if applicable)
-- Forge logs (if relevant)
-
-### Feature Requests
-
-For feature requests, please provide:
-
-- Clear description of the feature
-- Use case and business value
-- Proposed implementation approach
-- Alternative solutions considered
-
----
-
-## Changelog
-
-### Version 1.1.4 (Current)
-- ✅ Initial release with basic CRUD operations
-- ✅ Secure credential storage using Forge storage
-- ✅ React-based user interface
-- ✅ Form validation and error handling
-- ✅ Project-scoped data isolation
-- ✅ Comprehensive documentation
-
-### Planned Releases
-
-#### Version 1.2.0
-- 🔄 AWS API integration for cost data
-- 🔄 Cost visualization components
-- 🔄 Budget alert functionality
-
-#### Version 1.3.0
-- 🔄 Advanced filtering and search
-- 🔄 Export functionality
-- 🔄 Audit logging dashboard
-
-#### Version 2.0.0
-- 🔄 Multi-cloud support (Azure, GCP)
-- 🔄 Advanced reporting features
-- 🔄 Integration with external cost tools
-
----
-
-*Last updated: 2024-12-19*
